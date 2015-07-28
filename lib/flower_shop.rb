@@ -11,9 +11,14 @@ class FlowerShop
   end
 
   def run
+    user_input = nil
     puts 'Welcome to the Flower Shop App.'
     puts display # input instructions
-    user_input = gets.chomp
+
+    while not ['1', '2'].include?(user_input)
+      puts display
+      user_input = gets.chomp
+    end
 
     if user_input == '1'
       order_filler = OrderFiller.fill(self)
