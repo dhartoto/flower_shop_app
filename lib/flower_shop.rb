@@ -1,13 +1,13 @@
-require 'products'
+require 'catalogue'
 require 'order_filler'
 
 class FlowerShop
-  attr_reader   :products
+  attr_reader   :catalogue
   attr_accessor :display
 
   def initialize
     @display  = file_upload_instructions
-    @products = Products.all
+    @catalogue = Catalogue.create
   end
 
   def run

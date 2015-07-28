@@ -3,7 +3,7 @@ require 'flower_shop'
 
 describe FlowerShop do
   describe '.new' do
-    before { allow(Products).to receive(:all) }
+    before { allow(Catalogue).to receive(:create) }
 
     it { should be_an_instance_of(FlowerShop) }
 
@@ -12,8 +12,8 @@ describe FlowerShop do
         " '1' to calculate costs and bundle breakdown, or '2' to exit."
       expect(subject.display).to eq(msg)
     end
-    it 'should have products' do
-      expect(Products).to receive(:all)
+    it 'should have catalogue' do
+      expect(Catalogue).to receive(:create)
       FlowerShop.new
     end
   end
@@ -23,7 +23,7 @@ describe FlowerShop do
     let(:order_filler) { instance_double('OrderFiller', message: 'some message') }
 
     before do
-      allow(Products).to receive(:all)
+      allow(Catalogue).to receive(:create)
       allow(OrderFiller).to receive(:fill) { order_filler }
     end
 
