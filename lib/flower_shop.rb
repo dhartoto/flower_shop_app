@@ -13,7 +13,7 @@ class FlowerShop
   def run
     user_input = nil
     puts 'Welcome to the Flower Shop App.'
-    puts display # input instructions
+    puts display # user input instructions
 
     while not ['1', '2'].include?(user_input)
       puts display
@@ -22,7 +22,7 @@ class FlowerShop
 
     if user_input == '1'
       order_filler = OrderFiller.fill(self)
-      self.display = order_filler.message # breakdown or error message
+      self.display = order_filler.message # expect error message or results
     end
     self.display = 'Exiting the Flower Shop' if user_input == '2'
     puts display # display response from order filler or exit message
