@@ -52,5 +52,13 @@ describe FlowerShop do
         expect(app.display).to eq("Exiting the Flower Shop")
       end
     end
+
+    context 'when user enters invalid entry' do
+      it 'gets user input again' do
+        allow(app).to receive(:gets).and_return('wrong_input', '2')
+        expect(app).to receive(:gets).twice
+        app.run
+      end
+    end
   end
 end
