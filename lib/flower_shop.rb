@@ -12,10 +12,15 @@ class FlowerShop
 
   def run
     puts 'Welcome to the Flower Shop App.'
-    puts display # display instructions
-    order_filler = OrderFiller.fill(self)
-    self.display = order_filler.message # breakdown or error message
-    puts display # display response from order filler
+    puts display # input instructions
+    user_input = gets.chomp
+
+    if user_input == '1'
+      order_filler = OrderFiller.fill(self)
+      self.display = order_filler.message # breakdown or error message
+    end
+    self.display = 'Exiting the Flower Shop' if user_input == '2'
+    puts display # display response from order filler or exit message
   end
 
   private

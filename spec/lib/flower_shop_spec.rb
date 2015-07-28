@@ -28,7 +28,7 @@ describe FlowerShop do
     end
 
     context 'when user enters 1 to calculate costs and bundle' do
-      before { allow(app).to receive(:gets).with('1') }
+      before { allow(app).to receive(:gets) { '1' } }
 
       it 'fills order' do
         expect(OrderFiller).to receive(:fill)
@@ -41,8 +41,8 @@ describe FlowerShop do
     end
 
     context 'when user enters 2 to exit program' do
-      before { allow(app).to receive(:gets).with('2') }
-      
+      before { allow(app).to receive(:gets) { '2' } }
+
       it 'does not fill order' do
         expect(OrderFiller).not_to receive(:fill)
         app.run
