@@ -1,6 +1,6 @@
 class OrderFiller
 
-  def self.fill(products)
+  def self.fill(catalogue)
   end
 
   def message
