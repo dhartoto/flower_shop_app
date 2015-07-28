@@ -41,7 +41,8 @@ describe Catalogue do
     let(:product) { catalogue.find('R12') }
 
     it 'returns a hash' do
-      expect(catalogue.find('R12')).to eq(yaml_mock)
+      expected_hash = {"name"=>"Roses", "bundles"=>{5=>6.99, 10=>12.99}}
+      expect(catalogue.find('R12')).to eq(expected_hash)
     end
     it 'returns hash with name' do
       expect(product['name']).to eq('Roses')

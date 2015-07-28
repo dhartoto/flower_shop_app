@@ -15,4 +15,8 @@ class Catalogue
   def initialize(options={})
     @products = options[:products]
   end
+
+  def find(code)
+    products[code]
+  end
 end
