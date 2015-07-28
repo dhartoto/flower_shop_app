@@ -31,18 +31,18 @@ describe Catalogue do
     end
     it 'assigns a hash of products' do
       catalogue = Catalogue.create
-      expect(catalogue.products.first).to be_an_instance_of(Hash)
+      expect(catalogue.products['R12']).to be_an_instance_of(Hash)
     end
     it 'assigns a hash of products with name' do
       catalogue = Catalogue.create
-      product = catalogue.products.first
-      expect(product['name']).to be_an_instance_of('Roses')
+      product = catalogue.products['R12']
+      expect(product['name']).to eq('Roses')
     end
     it 'assigns a hash of products with name' do
       catalogue = Catalogue.create
-      product = catalogue.products.first
+      product = catalogue.products['R12']
       expected_hash = { 5 => 6.99, 10 => 12.99 }
-      expect(product['bundles']).to be_an_instance_of(expected_hash)
+      expect(product['bundles']).to eq(expected_hash)
     end
   end
 end
