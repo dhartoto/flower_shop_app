@@ -7,11 +7,17 @@ describe Catalogue do
     let(:yaml_mock) do
       { "R12" => {
         "name" => "Roses",
-        "bundle" => {
+        "bundles" => {
           5 => 6.99,
-          10 => 12.99
+          10 => 12.99 }
+        },
+        "L09" => {
+          "name" => "Lilies",
+          "bundles" => {
+            3 => 16.99,
+            6 => 16.95,
+            9 => 24.95 }
           }
-        }
       }
     end
 
@@ -23,17 +29,20 @@ describe Catalogue do
       catalogue = Catalogue.create
       expect(catalogue).to respond_to :products
     end
-    it 'assigns list of Structs to products' do
+    it 'assigns a hash of products' do
       catalogue = Catalogue.create
-      expect(catalogue.products.first).to be_an_instance_of(Struct)
+      expect(catalogue.products.first).to be_an_instance_of(Hash)
     end
-    it 'creates product that responds to name' do
+    it 'assigns a hash of products with name' do
       catalogue = Catalogue.create
-      expect(catalogue.products.first).to respond_to(:name)
+      product = catalogue.products.first
+      expect(product['name']).to be_an_instance_of('Roses')
     end
-    it 'creates product that responds to bunch' do
+    it 'assigns a hash of products with name' do
       catalogue = Catalogue.create
-      expect(catalogue.products.first).to respond_to(:bunch)
+      product = catalogue.products.first
+      expected_hash = { 5 => 6.99, 10 => 12.99 }
+      expect(product['bundles']).to be_an_instance_of(expected_hash)
     end
   end
 end
