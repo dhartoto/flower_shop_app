@@ -1,4 +1,4 @@
-require 'customer'
+require 'order_file'
 require 'item'
 
 class Order
@@ -11,7 +11,7 @@ class Order
   end
 
   def create
-    file = Customer::File.get
+    file = OrderFile.get
     if file.valid?
       file.content.each do |line|
         items << Item.create(line)
