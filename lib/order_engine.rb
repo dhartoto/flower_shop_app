@@ -8,7 +8,7 @@ class OrderEngine
 
   def initialize(catalogue)
     @catalogue = catalogue
-    @order = Order.new(catalogue)
+    @order = Order.new(catalogue).create
   end
 
   def run
