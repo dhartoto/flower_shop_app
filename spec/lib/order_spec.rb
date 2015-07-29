@@ -23,7 +23,7 @@ describe Order do
     it 'retreives customer order file' do
       content = [["10 R12"], ["15 L09"], ["13 T58"]]
       file = instance_double('Customer::File', valid?: true, content: content)
-      expect(Customer::File).to receive(:retreive) { file }
+      expect(Customer::File).to receive(:get) { file }
       order.create
     end
 
@@ -33,7 +33,7 @@ describe Order do
         instance_double('Customer::File', valid?: true, content: content)
       end
 
-      before { allow(Customer::File).to receive(:retreive) { file } }
+      before { allow(Customer::File).to receive(:get) { file } }
 
       it 'creates items' do
         expect(Item).to receive(:create).exactly(3).times
@@ -50,7 +50,7 @@ describe Order do
         instance_double('Customer::File', valid?: false, error_message: 'error')
       end
 
-      before { allow(Customer::File).to receive(:retreive) { file } }
+      before { allow(Customer::File).to receive(:get) { file } }
 
       it 'does not create items' do
         expect(Item).not_to receive(:create)

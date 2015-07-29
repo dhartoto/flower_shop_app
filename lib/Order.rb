@@ -11,7 +11,7 @@ class Order
   end
 
   def create
-    file = Customer::File.retreive
+    file = Customer::File.get
     if file.valid?
       file.content.each do |line|
         items << Item.create(line)
