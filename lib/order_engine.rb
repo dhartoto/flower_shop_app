@@ -3,7 +3,7 @@ require 'packer'
 require 'invoicer'
 
 class OrderEngine
-  attr_reader   :catalogue
+  attr_reader   :catalogue, :order
   attr_accessor :response
 
   def initialize(catalogue)
@@ -12,8 +12,12 @@ class OrderEngine
   end
 
   def run
-    package = Packer.pack(self)
-    invoice = Invoicer.create(package)
-    self.response = invoice.total
+    if order.valid?
+      package = Packer.pack(self)
+      invoice = Invoicer.create(package)
+      self.response = invoice.total
+    else
+      self.response = order.error_message
+    end
   end
 end
