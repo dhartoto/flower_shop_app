@@ -20,18 +20,19 @@ describe FlowerShop do
 
   describe '#run' do
     let(:app) { FlowerShop.new }
-    let(:order_filler) { instance_double('OrderFiller', message: 'some message') }
+    let(:order_engine) { instance_double('OrderEngine', response: 'some message') }
 
     before do
       allow(Catalogue).to receive(:create)
-      allow(OrderFiller).to receive(:fill) { order_filler }
+      allow(OrderEngine).to receive(:new) { order_engine }
+      allow(order_engine).to receive(:run)
     end
 
     context 'when user enters 1 to calculate costs and bundle' do
       before { allow(app).to receive(:gets) { '1' } }
 
-      it 'fills order' do
-        expect(OrderFiller).to receive(:fill)
+      it 'runs the order engine' do
+        expect(order_engine).to receive(:run)
         app.run
       end
       it 'displays message to user' do
@@ -44,7 +45,7 @@ describe FlowerShop do
       before { allow(app).to receive(:gets) { '2' } }
 
       it 'does not fill order' do
-        expect(OrderFiller).not_to receive(:fill)
+        expect(OrderEngine).not_to receive(:new)
         app.run
       end
       it 'displays exit message to user' do
