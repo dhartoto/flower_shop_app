@@ -1,5 +1,5 @@
 require 'catalogue'
-require 'order_filler'
+require 'order_engine'
 
 class FlowerShop
   attr_reader   :catalogue
@@ -21,8 +21,9 @@ class FlowerShop
     end
 
     if user_input == '1'
-      order_filler = OrderFiller.fill(self)
-      self.display = order_filler.message # expect error message or results
+      order_engine = OrderEngine.new(catalogue)
+      order_engine.run
+      self.display = order_engine.response # expect error message or results
     end
     self.display = 'Exiting the Flower Shop' if user_input == '2'
     puts display # display response from order filler or exit message
