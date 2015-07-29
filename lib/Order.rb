@@ -12,8 +12,12 @@ class Order
 
   def create
     file = Customer::File.retreive
-    file.content.each do |line|
-      items << Item.create(line)
+    if file.valid?
+      file.content.each do |line|
+        items << Item.create(line)
+      end
+    else
+      self.error_message = file.error_message
     end
   end
 
