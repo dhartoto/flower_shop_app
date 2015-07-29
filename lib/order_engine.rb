@@ -1,7 +1,10 @@
 require 'order'
+require 'packer'
+require 'invoicer'
 
 class OrderEngine
-  attr_reader :response, :catalogue
+  attr_reader   :catalogue
+  attr_accessor :response
 
   def initialize(catalogue)
     @catalogue = catalogue
@@ -9,5 +12,8 @@ class OrderEngine
   end
 
   def run
+    package = Packer.pack(self)
+    invoice = Invoicer.create(package)
+    self.response = invoice.total
   end
 end
