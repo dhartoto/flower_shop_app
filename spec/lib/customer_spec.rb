@@ -7,10 +7,10 @@ describe Customer do
     describe '.get' do
 
       context 'when file is valid' do
-        it 'reads file from order.csv' do
+        it 'assigns file to content attribute' do
           file = Customer::File.get
           expected_array = [["10 R12"], ["15 L09"], ["13 T58"]]
-          expect(file).to eq(expected_array)
+          expect(file.content).to eq(expected_array)
         end
       end
       context 'when file is not present'
