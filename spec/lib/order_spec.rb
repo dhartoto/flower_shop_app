@@ -18,6 +18,7 @@ describe Order do
 
   describe '#create' do
     let(:order) { Order.new(catalogue) }
+    before { allow(Item).to receive(:create) }
 
     it 'retreives customer order file' do
       content = [["10 R12"], ["15 L09"], ["13 T58"]]
