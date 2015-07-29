@@ -20,7 +20,10 @@ describe Order do
     let(:order) { Order.new(catalogue) }
 
     it 'retreives customer order file' do
-      expect(Customer::File).to receive(:retreive)
+      content = [["10 R12"], ["15 L09"], ["13 T58"]]
+      file = instance_double('Customer::File', valid?: true, content: content)
+      expect(Customer::File).to receive(:retreive) { file }
+      order.create
     end
 
     context 'when file is valid' do
