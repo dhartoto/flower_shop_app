@@ -30,11 +30,18 @@ class OrderFile
     order = read_file[0].first.split(' ')
     order_qty = order[0].to_i
     product = catalogue.find(order[1])
-    bundle_qty = product['bundles'].keys
-    bundle_qty.each do |bundle|
-      order_qty = order_qty%bundle if order_qty >= bundle
+    bundle_qty = product['bundles'].keys.sort { |x,y| y <=> x }
+
+    remainder = order_qty
+    while bundle_qty.size > 0 do
+      bundle_qty.each do |bundle|
+        remainder = remainder%bundle if remainder >= bundle
+      end
+      break if remainder == 0
+      remainder = order_qty
+      bundle_qty.shift
     end
-    order_qty != 0
+    remainder != 0
   end
 
   private

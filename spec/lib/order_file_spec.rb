@@ -80,8 +80,13 @@ describe OrderFile do
         resp = OrderFile.unfillalbe?(catalogue)
         expect(resp).to eq(true)
       end
-      it 'returns false if order can be matched by adding two bundles' do
+      it 'returns false if order is 15' do
         allow(CSV).to receive(:read) { [["15 T58"]] }
+        resp = OrderFile.unfillalbe?(catalogue)
+        expect(resp).to eq(false)
+      end
+      it 'returns false if order is 13' do
+        allow(CSV).to receive(:read) { [["13 T58"]] }
         resp = OrderFile.unfillalbe?(catalogue)
         expect(resp).to eq(false)
       end
