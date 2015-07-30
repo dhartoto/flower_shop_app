@@ -6,14 +6,11 @@ class OrderFile
   FULL_PATH = "public/uploads/#{FILE_NAME}"
 
   def self.get(catalogue)
-    if file_errors?
-      error_message = get_error_message
-      new(error_message: error_message)
-    elsif data_errors?(catalogue)
+    if file_errors? || data_errors?(catalogue)
       error_message = get_error_message
       new(error_message: error_message)
     else
-      file = CSV.read(FULL_PATH)
+      file = read_file
       new(content: file)
     end
   end
@@ -29,13 +26,17 @@ class OrderFile
 
   private
 
+  def self.read_file
+    CSV.read(FULL_PATH)
+  end
+
   def self.data_errors?(catalogue)
     resp = false
-    file = CSV.read(FULL_PATH)
+    file = read_file
     file.each do |line|
       line = line.first.split(' ')
-      Integer(line[0]) rescue resp = true
-      resp = true unless catalogue.find(line[1])
+      Integer(line[0]) rescue resp = true # check if first part is an integer
+      resp = true unless catalogue.find(line[1]) # check if product code is valid
     end
     resp
   end
