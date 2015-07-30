@@ -31,7 +31,10 @@ class OrderFile
     order_qty = order[0].to_i
     product = catalogue.find(order[1])
     bundle_qty = product['bundles'].keys
-    not bundle_qty.include?(order_qty)
+    bundle_qty.each do |bundle|
+      order_qty = order_qty%bundle if order_qty >= bundle
+    end
+    order_qty != 0
   end
 
   private
