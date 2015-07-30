@@ -22,7 +22,9 @@ class OrderFile
     @error_message = options[:error_message]
   end
 
-  def valid?; end
+  def valid?
+    error_message.nil?
+  end
 
   private
 

@@ -44,14 +44,14 @@ describe OrderFile do
   describe '#valid?' do
     context 'when valid' do
       it 'returns true' do
-        file = OrderFile.new(error_message: 'error')
+        file = OrderFile.new()
         expect(file.valid?).to eq(true)
       end
     end
     context 'when invalid' do
       it 'returns true' do
-        file = OrderFile.new()
-        expect(file.valid).to eq(false)
+        file = OrderFile.new(error_message: 'error')
+        expect(file.valid?).to eq(false)
       end
     end
   end
