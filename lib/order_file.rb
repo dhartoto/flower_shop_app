@@ -27,21 +27,26 @@ class OrderFile
   end
   # [["10 R12"], ["15 L09"], ["13 T58"]]
   def self.unfillalbe?(catalogue)
-    order = read_file[0].first.split(' ')
-    order_qty = order[0].to_i
-    product = catalogue.find(order[1])
-    bundle_qty = product['bundles'].keys.sort { |x,y| y <=> x }
+    order_file = read_file
+    resp = false
+    order_file.each do |line|
+      order = line.first.split(' ')
+      order_qty = order[0].to_i
+      product = catalogue.find(order[1])
+      bundle_qty = product['bundles'].keys.sort { |x,y| y <=> x }
 
-    remainder = order_qty
-    while bundle_qty.size > 0 do
-      bundle_qty.each do |bundle|
-        remainder = remainder%bundle if remainder >= bundle
-      end
-      break if remainder == 0
       remainder = order_qty
-      bundle_qty.shift
+      while bundle_qty.size > 0 do
+        bundle_qty.each do |bundle|
+          remainder = remainder%bundle if remainder >= bundle
+        end
+        break if remainder == 0
+        remainder = order_qty
+        bundle_qty.shift
+      end
+      resp = true unless remainder == 0
     end
-    remainder != 0
+    resp
   end
 
   private

@@ -42,7 +42,6 @@ describe OrderFile do
 
     context 'when order quantity cannot be filled' do
 
-
     end
   end
 
@@ -61,7 +60,7 @@ describe OrderFile do
     end
   end
 
-  # TDD for checking if order is fillable
+  # TDD for building unfillable? algorithm
 
   describe '.unfillalbe?' do
     context 'when one order is for Tulip (T58)' do
@@ -89,6 +88,18 @@ describe OrderFile do
         allow(CSV).to receive(:read) { [["13 T58"]] }
         resp = OrderFile.unfillalbe?(catalogue)
         expect(resp).to eq(false)
+      end
+    end
+    context 'when multiple orders' do
+      it 'returns false if all orders are fillable' do
+        allow(CSV).to receive(:read) { [["10 R12"], ["13 T58"]] }
+        resp = OrderFile.unfillalbe?(catalogue)
+        expect(resp).to eq(false)
+      end
+      it 'returns true if one order is unfillable' do
+        allow(CSV).to receive(:read) { [["10 R12"], ["3, L09"], ["16 T58"]] }
+        resp = OrderFile.unfillalbe?(catalogue)
+        expect(resp).to eq(true)
       end
     end
   end
