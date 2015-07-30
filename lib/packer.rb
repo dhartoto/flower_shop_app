@@ -1,4 +1,11 @@
 class Packer
-  def self.pack(order_engine)
+  def self.pack(order)
+    new(order)
+  end
+
+  attr_reader :order
+
+  def initialize(order)
+    @order = order
   end
 end
