@@ -1,18 +1,18 @@
 require 'csv'
 
-class OrderFile
+class StandardValidator
   FILE_NAME = 'order.csv'
   FULL_PATH = "public/uploads/#{FILE_NAME}"
 
-  def self.get
-    content = read_file
-    new(content: content)
-  end
-
-  attr_reader :content
+  attr_reader :status, :error_message
 
   def initialize(options={})
-    @content = options[:content]
+    @status = options[:status]
+    @error_message = options[:error_message]
+  end
+
+  def valid?
+    status == 200
   end
 
   private

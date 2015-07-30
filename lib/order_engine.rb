@@ -3,21 +3,23 @@ require 'packer'
 require 'invoicer'
 
 class OrderEngine
-  attr_reader   :catalogue, :order
+  attr_reader   :catalogue
   attr_accessor :response
 
   def initialize(catalogue)
     @catalogue = catalogue
-    @order = Order.new(catalogue).create
   end
 
   def run
-    if order.valid?
-      package = Packer.pack(self)
+    resp = Validator.validate(catalogue)
+    if resp.valid?
+      order = Order.new
+      order.create
+      package = Packer.pack(order)
       invoice = Invoicer.create(package)
       self.response = invoice.total
     else
-      self.response = order.error_message
+      self.response = resp.error_message
     end
   end
 end
