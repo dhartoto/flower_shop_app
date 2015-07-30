@@ -19,8 +19,10 @@ class Order
     else
       self.error_message = file.error_message
     end
+    self
   end
 
   def valid?
+    error_message.nil?
   end
 end
