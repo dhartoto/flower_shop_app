@@ -10,6 +10,10 @@ describe Packer do
       package = Packer.pack(order)
       expect(package.order).to eq(order)
     end
+    it 'responds to packs' do
+      package = Packer.pack(order)
+      expect(package).to respond_to(:packs)
+    end
     it 'creates one pack if there is one order' do
       expect(Pack).to receive(:create)
       Packer.pack(order)
