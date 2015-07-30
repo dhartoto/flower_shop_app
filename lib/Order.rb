@@ -11,7 +11,7 @@ class Order
   end
 
   def create
-    file = OrderFile.get
+    file = OrderFile.get(catalogue)
     if file.valid?
       file.content.each do |line|
         items << Item.create(line)
