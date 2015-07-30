@@ -25,9 +25,13 @@ class OrderFile
   def valid?
     error_message.nil?
   end
-
+  # [["10 R12"], ["15 L09"], ["13 T58"]]
   def self.unfillalbe?(catalogue)
-    false
+    order = read_file[0].first.split(' ')
+    order_qty = order[0].to_i
+    product = catalogue.find(order[1])
+    bundle_qty = product['bundles'].keys
+    not bundle_qty.include?(order_qty)
   end
 
   private

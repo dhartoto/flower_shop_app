@@ -62,6 +62,7 @@ describe OrderFile do
   end
 
   # TDD for checking if order is fillable
+
   describe '.unfillalbe?' do
     context 'when order is for Roses (R12)' do
       it 'returns false if order is 5' do
@@ -69,10 +70,15 @@ describe OrderFile do
         resp = OrderFile.unfillalbe?(catalogue)
         expect(resp).to eq(false)
       end
-      it 'returns true if order is 9' do
-        allow(CSV).to receive(:read) { [["5 R12"]] }
+      it 'returns false if order is 9' do
+        allow(CSV).to receive(:read) { [["10 R12"]] }
         resp = OrderFile.unfillalbe?(catalogue)
         expect(resp).to eq(false)
+      end
+      it 'returns true if order is 4' do
+        allow(CSV).to receive(:read) { [["4 R12"]] }
+        resp = OrderFile.unfillalbe?(catalogue)
+        expect(resp).to eq(true)
       end
     end
   end
