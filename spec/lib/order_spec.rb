@@ -62,4 +62,23 @@ describe Order do
       end
     end
   end
+
+  describe '#valid?' do
+    context 'when valid' do
+      before { allow(OrderFile).to receive(:get) { file } }
+      it 'returns true' do
+        file = instance_double('OrderFile', valid?: true, content: [])
+        allow(Item).to receive(:create)
+        order = Order.new(catalogue)
+        expect(order.valid?).to eq(true)
+      end
+    end
+    context 'when invalid' do
+      it 'returns true' do
+        file = instance_double('OrderFile', valid?: false, error_message: 'error')
+        file = Order.new(error_message: 'error')
+        expect(file.valid?).to eq(false)
+      end
+    end
+  end
 end
