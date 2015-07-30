@@ -14,10 +14,6 @@ describe OrderEngine do
       order_engine = OrderEngine.new('catalogue')
       expect(order_engine).to respond_to(:catalogue)
     end
-    it 'gets an Order' do
-      expect(Order).to receive(:new)
-      order_engine = OrderEngine.new('catalogue')
-    end
   end
 
   describe '#run' do
@@ -25,14 +21,19 @@ describe OrderEngine do
     let(:invoicer) { instance_double('Invoicer', total: 'total $$') }
 
     context 'when order is valid' do
-      let(:order) { instance_double('Order', valid?: true) }
+      let(:resp) { instance_double('Validator', valid?: true) }
 
       before do
-        allow(Order).to receive_message_chain(:new, :create) { order }
+        allow(Validator).to receive(:validate) { resp }
+        allow(Order).to receive_message_chain(:new, :create)
         allow(Packer).to receive(:pack)
         allow(Invoicer).to receive(:create) { invoicer }
       end
 
+      it 'gets an Order' do
+        expect(Order).to receive(:new)
+        order_engine.run
+      end
       it 'packs order' do
         expect(Packer).to receive(:pack)
         order_engine.run
@@ -47,9 +48,9 @@ describe OrderEngine do
       end
     end
     context 'when order is not valid' do
-      let(:order) { instance_double('Order', valid?: false, error_message: 'error') }
+      let(:resp) { instance_double('Validator', valid?: false, error_message: 'error') }
 
-      before { allow(Order).to receive_message_chain(:new, :create) { order } }
+      before { allow(Validator).to receive(:validate) { resp } }
 
       it 'does not pack order' do
         expect(Packer).not_to receive(:pack)
