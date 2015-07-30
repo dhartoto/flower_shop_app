@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'order_engine'
+require 'validator'
 
 describe OrderEngine do
 
