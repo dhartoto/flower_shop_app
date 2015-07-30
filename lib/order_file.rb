@@ -6,7 +6,7 @@ class OrderFile
   FULL_PATH = "public/uploads/#{FILE_NAME}"
 
   def self.get(catalogue)
-    if file_errors? || data_errors?(catalogue)
+    if file_errors? || data_errors?(catalogue) || unfillalbe?(catalogue)
       error_message = get_error_message
       new(error_message: error_message)
     else
@@ -24,6 +24,10 @@ class OrderFile
 
   def valid?
     error_message.nil?
+  end
+
+  def self.unfillalbe?(catalogue)
+    false
   end
 
   private

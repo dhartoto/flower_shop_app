@@ -39,6 +39,11 @@ describe OrderFile do
         expect(file.error_message).to eq(msg)
       end
     end
+
+    context 'when order quantity cannot be filled' do
+
+
+    end
   end
 
   describe '#valid?' do
@@ -52,6 +57,22 @@ describe OrderFile do
       it 'returns true' do
         file = OrderFile.new(error_message: 'error')
         expect(file.valid?).to eq(false)
+      end
+    end
+  end
+
+  # TDD for checking if order is fillable
+  describe '.unfillalbe?' do
+    context 'when order is for Roses (R12)' do
+      it 'returns false if order is 5' do
+        allow(CSV).to receive(:read) { [["5 R12"]] }
+        resp = OrderFile.unfillalbe?(catalogue)
+        expect(resp).to eq(false)
+      end
+      it 'returns true if order is 9' do
+        allow(CSV).to receive(:read) { [["5 R12"]] }
+        resp = OrderFile.unfillalbe?(catalogue)
+        expect(resp).to eq(false)
       end
     end
   end
