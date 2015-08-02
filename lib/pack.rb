@@ -1,4 +1,4 @@
-require 'fillable'
+require_relative 'fillable'
 
 class Pack
   include Fillable

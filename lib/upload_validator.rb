@@ -1,4 +1,4 @@
-require 'standard_validator'
+require_relative 'standard_validator'
 
 class UploadValidator < StandardValidator
   def self.validate(*arg)

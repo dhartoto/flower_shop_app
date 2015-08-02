@@ -1,4 +1,4 @@
-require 'standard_validator'
+require_relative 'standard_validator'
 
 class DataValidator < StandardValidator
   def self.validate(catalogue)

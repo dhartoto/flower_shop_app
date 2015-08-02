@@ -1,6 +1,6 @@
 class Item
   def self.create(line)
-    line = line.split(' ')
+    line = line.first.split(' ')
     code = line[1]
     quantity = line[0].to_i
     new(code: code, quantity: quantity)

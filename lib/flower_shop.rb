@@ -1,5 +1,5 @@
-require 'catalogue'
-require 'order_engine'
+require_relative 'catalogue'
+require_relative 'order_engine'
 
 class FlowerShop
   attr_reader   :catalogue
@@ -13,7 +13,6 @@ class FlowerShop
   def run
     user_input = nil
     puts 'Welcome to the Flower Shop App.'
-    puts display # user input instructions
 
     while not ['1', '2'].include?(user_input)
       puts display
