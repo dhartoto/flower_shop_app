@@ -15,6 +15,14 @@ module Fillable
     resp
   end
 
+  def select_bundle(bundles, order)
+    combinations = less_than_or_equal_to_combinations(bundles, order)
+    matches = find_matches(combinations, bundles, order)
+    matches.sort {|x,y| sum(x) <=> sum(y) }.first
+  end
+
+  private
+
   def find_matches(combinations, bundles, order)
     match = []
     combinations.each do |batch|
@@ -56,5 +64,9 @@ module Fillable
       total += bundles[index] * count
     end
     total
+  end
+
+  def sum(array)
+    array.inject{ |r,e| r + e }
   end
 end

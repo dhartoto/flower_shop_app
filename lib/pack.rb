@@ -21,15 +21,20 @@ class Pack
   end
 
   def create_bundles
-    available_bundles = catalogue.find(code)['bundles'].keys
-    combinations = less_than_or_equal_to_combinations(available_bundles, total_quantity)
-    matches = find_matches(combinations, available_bundles, total_quantity)
-    selected = matches.sort {|x,y| sum(x) <=> sum(y) }.first
+    product_bundles = catalogue.find(code)['bundles'].keys
+    selected = select_bundle(product_bundles, total_quantity)
+    convert_to_hash(product_bundles, selected)
+  end
 
+  def convert_to_hash(product_bundles, selected)
     bundles = {}
-    available_bundles.each_with_index do |bundle, i|
+    product_bundles.each_with_index do |bundle, i|
       bundles[bundle] = selected[i]
     end
+    delete_zero_bundles(bundles)
+  end
+
+  def delete_zero_bundles(bundles)
     bundles.each do |k,v|
       bundles.delete(k) if v == 0
     end
