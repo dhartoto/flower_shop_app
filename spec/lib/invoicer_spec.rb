@@ -37,6 +37,43 @@ describe Invoicer do
       end
     end
 
-  #   context 'when multiple product order'
+    context 'when multiple product order' do
+      let(:catalogue) { Catalogue.create }
+
+      let(:packs) do
+        [Pack.new(
+          code: 'R12',
+          total_quantity: 10,
+          bundles: { 10 => 1 },
+          catalogue: catalogue
+          ),
+        Pack.new(
+          code: 'L09',
+          total_quantity: 15,
+          bundles: { 9 => 1, 6 => 1 },
+          catalogue: catalogue
+          ),
+        Pack.new(
+          code: 'T58',
+          total_quantity: 13,
+          bundles: { 5 => 2, 3 => 1 },
+          catalogue: catalogue
+          )]
+      end
+
+      let(:package) { OpenStruct.new(packs: packs) }
+
+      it 'should return total order value' do
+        invoice = Invoicer.create(package)
+        expect(invoice.total_value).to eq(19.98)
+      end
+      it 'should return breakdown of bundles' do
+        invoice = Invoicer.create(package)
+        details = "10 R12 $12.99\n\t1 x 10 $12.99\n"\
+          "15 L09 $41.90\n\t1 x 9 $24.95\n\t1 x 6 $16.95\n"\
+          "13 T58 $25.85\n\t2 x 5 $9.95\n\t1 x 3 $5.95\n"
+        expect(invoice.details).to eq(details)
+      end
+    end
   end
 end
