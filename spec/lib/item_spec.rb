@@ -3,7 +3,7 @@ require 'item'
 
 describe Item do
   describe '.create' do
-    let(:line) { "10 R12" }
+    let(:line) { ["10 R12"] }
     let(:item) { Item.create(line) }
 
     it 'creates an instance of Item' do

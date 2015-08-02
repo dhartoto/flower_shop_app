@@ -1,5 +1,4 @@
 require 'yaml'
-require 'pry'
 
 class Catalogue
   FILE_NAME = 'catalogue.yml'

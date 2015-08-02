@@ -1,6 +1,7 @@
-require 'order'
-require 'packer'
-require 'invoicer'
+require_relative 'order'
+require_relative 'packer'
+require_relative 'invoicer'
+require_relative 'validator'
 
 class OrderEngine
   attr_reader   :catalogue

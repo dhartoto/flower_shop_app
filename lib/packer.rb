@@ -1,4 +1,4 @@
-require 'pack'
+require_relative 'pack'
 
 class Packer
   def self.pack(order, catalogue)

@@ -1,5 +1,5 @@
-require 'standard_validator'
-require 'fillable'
+require_relative 'standard_validator'
+require_relative 'fillable'
 
 class OrderValidator < StandardValidator
   class << self

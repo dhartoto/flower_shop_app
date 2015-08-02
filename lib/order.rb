@@ -1,5 +1,5 @@
-require 'order_file'
-require 'item'
+require_relative 'order_file'
+require_relative 'item'
 
 class Order
   attr_accessor :items

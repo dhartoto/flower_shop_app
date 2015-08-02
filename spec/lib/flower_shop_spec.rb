@@ -8,8 +8,9 @@ describe FlowerShop do
     it { should be_an_instance_of(FlowerShop) }
 
     it 'should have instructions to display' do
-      msg = "Please save Order CSV file into the 'uploads' folder then enter"\
-        " '1' to calculate costs and bundle breakdown, or '2' to exit."
+      msg = " - Please save Order CSV file into the 'uploads' folder.\n"\
+          " - Enter '1' to calculate costs and bundle breakdown\n"\
+          " - Enter '2' to exit the Flower Shop App\n"
       expect(subject.display).to eq(msg)
     end
     it 'should have catalogue' do

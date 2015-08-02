@@ -1,6 +1,6 @@
-require 'upload_validator'
-require 'data_validator'
-require 'order_validator'
+require_relative 'upload_validator'
+require_relative 'data_validator'
+require_relative 'order_validator'
 
 class Validator
   VALIDATORS = [UploadValidator, DataValidator, OrderValidator]
