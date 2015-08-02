@@ -24,15 +24,15 @@ describe Invoicer do
 
       it 'has an order package' do
         invoice = Invoicer.create(package)
-        expect(invoice.package).to
+        expect(invoice.package.packs).to eq(packs)
       end
       it 'should return total order value' do
         invoice = Invoicer.create(package)
-        expect(invoice.total_value).to respond_to(19.98)
+        expect(invoice.total_value).to eq(19.98)
       end
       it 'should return breakdown of bundles' do
         invoice = Invoicer.create(package)
-        details = "10 R12 $19.98\n\t1 x 5 $6.99\n\t1 x 10 $12.99"
+        details = "15 R12 $19.98\n\t1 x 5 $6.99\n\t1 x 10 $12.99\n"
         expect(invoice.details).to eq(details)
       end
     end
