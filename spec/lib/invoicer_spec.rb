@@ -3,7 +3,6 @@ require 'invoicer'
 require 'ostruct'
 require 'pack'
 require 'catalogue'
-require 'pry'
 
 describe Invoicer do
 
