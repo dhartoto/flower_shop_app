@@ -15,7 +15,7 @@ class OrderEngine
     if resp.valid?
       order = Order.new
       order.create
-      package = Packer.pack(order)
+      package = Packer.pack(order, catalogue)
       invoice = Invoicer.create(package)
       self.response = invoice.total
     else
