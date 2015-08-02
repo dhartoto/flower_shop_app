@@ -31,7 +31,8 @@ class FlowerShop
   private
 
   def file_upload_instructions
-    "Please save Order CSV file into the 'uploads' folder then enter"\
-      " '1' to calculate costs and bundle breakdown, or '2' to exit."
+    " - Please save Order CSV file into the 'uploads' folder.\n"\
+    " - Enter '1' to calculate costs and bundle breakdown\n"\
+    " - Enter '2' to exit the Flower Shop App\n"
   end
 end
