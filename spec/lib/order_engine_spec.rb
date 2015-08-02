@@ -19,7 +19,7 @@ describe OrderEngine do
 
   describe '#run' do
     let(:order_engine) { OrderEngine.new('catalogue') }
-    let(:invoicer) { instance_double('Invoicer', total: 'total $$') }
+    let(:invoicer) { instance_double('Invoicer', details: 'total $$') }
 
     context 'when order is valid' do
       let(:resp) { instance_double('Validator', valid?: true) }

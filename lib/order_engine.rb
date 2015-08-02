@@ -17,7 +17,7 @@ class OrderEngine
       order.create
       package = Packer.pack(order, catalogue)
       invoice = Invoicer.create(package)
-      self.response = invoice.total
+      self.response = invoice.details
     else
       self.response = resp.error_message
     end
