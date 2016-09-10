@@ -35,7 +35,8 @@ private
 
   def get_optimal_bundle_for_order
     validate_uploaded_file
-    order_engine = OrderEngine.new(catalogue)
+    order = Order.create
+    order_engine = OrderEngine.new(order, catalogue)
     order_engine.run
     self.response = order_engine.response
   rescue Application::FileError, Application::DataError,
