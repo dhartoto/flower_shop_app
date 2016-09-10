@@ -11,8 +11,7 @@ class OrderEngine
   end
 
   def run
-    order = Order.new
-    order.create
+    order = Order.create
     package = Packer.pack(order, catalogue)
     invoice = Invoicer.create(package)
     self.response = invoice.details
