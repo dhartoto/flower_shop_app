@@ -16,11 +16,8 @@ class FlowerShop
 
     user_input = get_user_input
 
-    if user_input == '1'
-      order_engine = OrderEngine.new(catalogue)
-      order_engine.run
-      self.display = order_engine.response # expect error message or results
-    end
+    get_optimal_bundle_for_order if user_input == '1'
+
     self.display = 'Exiting the Flower Shop' if user_input == '2'
     puts display # display response from order filler or exit message
   end
@@ -32,6 +29,12 @@ private
       input = gets.chomp
     end
     input
+  end
+
+  def get_optimal_bundle_for_order
+    order_engine = OrderEngine.new(catalogue)
+    order_engine.run
+    self.display = order_engine.response # expect error message or results
   end
 
   def user_instructions
