@@ -3,10 +3,10 @@ require_relative 'order_engine'
 
 class FlowerShop
   attr_reader   :catalogue
-  attr_accessor :display
+  attr_accessor :response
 
   def initialize
-    @display  = user_instructions
+    @response  = user_instructions
     @catalogue = Catalogue.create
   end
 
@@ -19,13 +19,13 @@ class FlowerShop
 
     exit_flower_shop_app if user_input == '2'
 
-    puts display # display response from order filler or exit message
+    puts response # display response from order filler or exit message
   end
 
 private
   def get_user_input(input = nil)
     while not ['1', '2'].include?(input)
-      puts display
+      puts response
       input = gets.chomp
     end
     input
@@ -34,11 +34,11 @@ private
   def get_optimal_bundle_for_order
     order_engine = OrderEngine.new(catalogue)
     order_engine.run
-    self.display = order_engine.response # expect error message or results
+    self.response = order_engine.response # expect error message or results
   end
 
   def exit_flower_shop_app
-    self.display = 'Exiting the Flower Shop'
+    self.response = 'Exiting the Flower Shop'
   end
 
   def user_instructions

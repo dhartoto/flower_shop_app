@@ -11,8 +11,9 @@ describe FlowerShop do
       msg = " - Please save Order CSV file into the 'uploads' folder.\n"\
           " - Enter '1' to calculate costs and bundle breakdown\n"\
           " - Enter '2' to exit the Flower Shop App\n"
-      expect(subject.display).to eq(msg)
+      expect(subject.response).to eq(msg)
     end
+
     it 'should have catalogue' do
       expect(Catalogue).to receive(:create)
       FlowerShop.new
@@ -38,7 +39,7 @@ describe FlowerShop do
       end
       it 'displays message to user' do
         app.run
-        expect(app.display).to eq('some message')
+        expect(app.response).to eq('some message')
       end
     end
 
@@ -51,7 +52,7 @@ describe FlowerShop do
       end
       it 'displays exit message to user' do
         app.run
-        expect(app.display).to eq("Exiting the Flower Shop")
+        expect(app.response).to eq("Exiting the Flower Shop")
       end
     end
 
