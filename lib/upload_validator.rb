@@ -1,5 +1,5 @@
 require_relative 'base_validator'
-require 'exceptions'
+require_relative 'exceptions'
 
 class UploadValidator < BaseValidator
 
