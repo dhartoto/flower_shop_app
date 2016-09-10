@@ -34,7 +34,7 @@ private
   end
 
   def get_optimal_bundle_for_order
-    validate_file_upload
+    validate_uploaded_file
     order_engine = OrderEngine.new(catalogue)
     order_engine.run
     self.response = order_engine.response
@@ -44,7 +44,7 @@ private
     self.response = error.message
   end
 
-  def validate_file_upload
+  def validate_uploaded_file
     Validator.validate(catalogue)
   end
 
