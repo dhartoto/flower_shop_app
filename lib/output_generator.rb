@@ -1,8 +1,8 @@
-class Invoicer
+class OutputGenerator
   attr_reader   :package, :details
   attr_accessor :total_value
 
-  def self.create(package)
+  def self.run(package)
     new(package: package)
   end
 

@@ -1,12 +1,12 @@
 require 'spec_helper'
-require 'invoicer'
+require 'output_generator'
 require 'ostruct'
 require 'pack'
 require 'catalogue'
 
-describe Invoicer do
+describe OutputGenerator do
 
-  describe '.create' do
+  describe '.run' do
     context 'when single product order' do
       let(:catalogue) { Catalogue.create }
 
@@ -22,13 +22,16 @@ describe Invoicer do
       let(:package) { OpenStruct.new(packs: packs) }
 
       it 'has an order package' do
-        invoice = Invoicer.create(package)
-        expect(invoice.package.packs).to eq(packs)
+        output = OutputGenerator.run(package)
+
+        expect(output.package.packs).to eq(packs)
       end
+
       it 'should return breakdown of bundles' do
-        invoice = Invoicer.create(package)
+        output = OutputGenerator.run(package)
         details = "15 R12 $19.98\n\t1 x 5 $6.99\n\t1 x 10 $12.99\n"
-        expect(invoice.details).to eq(details)
+
+        expect(output.details).to eq(details)
       end
     end
 
@@ -59,11 +62,12 @@ describe Invoicer do
       let(:package) { OpenStruct.new(packs: packs) }
 
       it 'should return breakdown of bundles' do
-        invoice = Invoicer.create(package)
+        output = OutputGenerator.run(package)
         details = "10 R12 $12.99\n\t1 x 10 $12.99\n"\
           "15 L09 $41.9\n\t1 x 6 $16.95\n\t1 x 9 $24.95\n"\
           "13 T58 $25.85\n\t1 x 3 $5.95\n\t2 x 5 $19.9\n"
-        expect(invoice.details).to eq(details)
+
+        expect(output.details).to eq(details)
       end
     end
   end

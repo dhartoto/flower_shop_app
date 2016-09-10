@@ -20,11 +20,11 @@ describe OrderEngine do
 
   describe '#run' do
     let(:order_engine) { OrderEngine.new('order', 'catalogue') }
-    let(:invoicer) { instance_double('Invoicer', details: 'total $$') }
+    let(:output_generator) { instance_double('OutputGenerator', details: 'total $$') }
 
     before do
       allow(OrderPacker).to receive(:run)
-      allow(Invoicer).to receive(:create) { invoicer }
+      allow(OutputGenerator).to receive(:run) { output_generator }
     end
 
     it 'packs order' do
@@ -34,7 +34,7 @@ describe OrderEngine do
     end
 
     it 'creates invoice' do
-      expect(Invoicer).to receive(:create)
+      expect(OutputGenerator).to receive(:run)
 
       order_engine.run
     end

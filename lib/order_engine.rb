@@ -1,5 +1,5 @@
 require_relative 'order_packer'
-require_relative 'invoicer'
+require_relative 'output_generator'
 
 class OrderEngine
   attr_reader   :order, :catalogue
@@ -12,7 +12,7 @@ class OrderEngine
 
   def run
     package = OrderPacker.run(order, catalogue)
-    invoice = Invoicer.create(package)
-    self.response = invoice.details
+    output = OutputGenerator.run(package)
+    self.response = output.details
   end
 end
