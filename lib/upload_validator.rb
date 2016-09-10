@@ -1,21 +1,29 @@
 require_relative 'base_validator'
+require 'exceptions'
 
 class UploadValidator < BaseValidator
-  def self.validate(*arg)
-    errors = !File.exists?(FULL_PATH) || File.zero?(FULL_PATH)
-    error_message = errors ? get_error_message : nil
-    status = errors ? 400 : 200
-    new(status: status, error_message: error_message)
+
+  def self.validate
+    validate_file_exists
+
+    validate_file_content_present
+
+    true
   end
 
-  private
+private
 
-  def self.get_error_message
-    if !File.exists?(FULL_PATH)
-      "Error: File not found. Please save order.csv to public/uploads"\
-        "folder."
-    else
+  def self.validate_file_exists
+    return if File.exists?(FULL_PATH)
+
+    raise FlowerShop::FileError,
+      "Error: File not found. Please save order.csv to public/uploads folder."
+  end
+
+  def self.validate_file_content_present
+    return unless File.zero?(FULL_PATH)
+
+    raise FlowerShop::FileError,
       "Error: File empty. Please check content of order.csv."
-    end
   end
 end
