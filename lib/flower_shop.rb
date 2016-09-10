@@ -14,10 +14,7 @@ class FlowerShop
     user_input = nil
     puts 'Welcome to the Flower Shop App.'
 
-    while not ['1', '2'].include?(user_input)
-      puts display
-      user_input = gets.chomp
-    end
+    user_input = get_user_input
 
     if user_input == '1'
       order_engine = OrderEngine.new(catalogue)
@@ -29,6 +26,13 @@ class FlowerShop
   end
 
 private
+  def get_user_input(input = nil)
+    while not ['1', '2'].include?(input)
+      puts display
+      input = gets.chomp
+    end
+    input
+  end
 
   def user_instructions
     " - Please save Order CSV file into the 'uploads' folder.\n"\
