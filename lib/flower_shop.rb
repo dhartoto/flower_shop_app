@@ -11,14 +11,14 @@ class FlowerShop
   end
 
   def run
-    user_input = nil
     puts 'Welcome to the Flower Shop App.'
 
     user_input = get_user_input
 
     get_optimal_bundle_for_order if user_input == '1'
 
-    self.display = 'Exiting the Flower Shop' if user_input == '2'
+    exit_flower_shop_app if user_input == '2'
+
     puts display # display response from order filler or exit message
   end
 
@@ -35,6 +35,10 @@ private
     order_engine = OrderEngine.new(catalogue)
     order_engine.run
     self.display = order_engine.response # expect error message or results
+  end
+
+  def exit_flower_shop_app
+    self.display = 'Exiting the Flower Shop'
   end
 
   def user_instructions
