@@ -16,13 +16,13 @@ class Bundle
     @breakdown      = find_min_bundle
   end
 
+private
   def find_min_bundle
     catalogue_bundles = catalogue.find(code)['bundles'].keys
     bundle_array = select_min_bundle_array(catalogue_bundles, total_quantity)
     convert_to_hash(catalogue_bundles, bundle_array)
   end
 
-private
   def select_min_bundle_array(bundles, order)
     combinations = find_bundles_less_than_or_equal_to_order(bundles, order)
     matches = find_matches(combinations, bundles, order)
