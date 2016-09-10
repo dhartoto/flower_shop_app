@@ -1,4 +1,4 @@
-require_relative 'pack'
+require_relative 'bundle'
 require_relative 'order'
 require_relative 'catalogue'
 
@@ -8,17 +8,17 @@ class OrderPacker
   end
 
   attr_reader   :order, :catalogue
-  attr_accessor :packs
+  attr_accessor :order_bundles
 
   def initialize(options={})
     @order     = options[:order]
     @catalogue = options[:catalogue]
-    @packs = create_packs
+    @order_bundles = create_order_bundles
   end
 
-  def create_packs
-    order.items.inject([]) do |packs, item|
-      packs << Pack.create(item, catalogue)
+  def create_order_bundles
+    order.items.inject([]) do |order_bundles, item|
+      order_bundles << Bundle.create(item, catalogue)
     end
   end
 end

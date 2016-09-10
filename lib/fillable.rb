@@ -15,7 +15,7 @@ module Fillable
     resp
   end
 
-  def select_bundle(bundles, order)
+  def select_min_bundle_array(bundles, order)
     combinations = less_than_or_equal_to_combinations(bundles, order)
     matches = find_matches(combinations, bundles, order)
     matches.sort {|x,y| sum(x) <=> sum(y) }.first

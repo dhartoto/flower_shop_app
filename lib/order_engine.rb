@@ -11,9 +11,9 @@ class OrderEngine
   end
 
   def run
-    package = get_minimum_order_bundles
-    output = generate_output(package)
-    
+    order_packer = get_minimum_order_bundles
+    output = generate_output(order_packer)
+
     self.response = output.details
   end
 
@@ -23,7 +23,7 @@ private
     OrderPacker.run(order, catalogue)
   end
 
-  def generate_output(package)
-    OutputGenerator.run(package)
+  def generate_output(order_packer)
+    OutputGenerator.run(order_packer)
   end
 end

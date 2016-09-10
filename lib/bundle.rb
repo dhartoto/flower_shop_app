@@ -1,6 +1,6 @@
 require_relative 'fillable'
 
-class Pack
+class Bundle
   include Fillable
 
   def self.create(item, catalogue)
@@ -11,25 +11,25 @@ class Pack
       )
   end
 
-  attr_reader :code, :total_quantity, :catalogue, :bundles
+  attr_reader :code, :total_quantity, :catalogue, :breakdown
 
   def initialize(options={})
     @code           = options[:code]
     @total_quantity = options[:total_quantity]
     @catalogue      = options[:catalogue]
-    @bundles        = create_bundles
+    @breakdown      = find_min_bundle
   end
 
-  def create_bundles
-    product_bundles = catalogue.find(code)['bundles'].keys
-    selected = select_bundle(product_bundles, total_quantity)
-    convert_to_hash(product_bundles, selected)
+  def find_min_bundle
+    catalogue_bundles = catalogue.find(code)['bundles'].keys
+    bundle_array = select_min_bundle_array(catalogue_bundles, total_quantity)
+    convert_to_hash(catalogue_bundles, bundle_array)
   end
 
-  def convert_to_hash(product_bundles, selected)
+  def convert_to_hash(catalogue_bundles, bundle_array)
     bundles = {}
-    product_bundles.each_with_index do |bundle, i|
-      bundles[bundle] = selected[i]
+    catalogue_bundles.each_with_index do |bundle, index|
+      bundles[bundle] = bundle_array[index]
     end
     delete_zero_bundles(bundles)
   end
