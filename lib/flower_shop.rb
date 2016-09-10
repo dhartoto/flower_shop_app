@@ -6,7 +6,7 @@ class FlowerShop
   attr_accessor :display
 
   def initialize
-    @display  = file_upload_instructions
+    @display  = user_instructions
     @catalogue = Catalogue.create
   end
 
@@ -28,9 +28,9 @@ class FlowerShop
     puts display # display response from order filler or exit message
   end
 
-  private
+private
 
-  def file_upload_instructions
+  def user_instructions
     " - Please save Order CSV file into the 'uploads' folder.\n"\
     " - Enter '1' to calculate costs and bundle breakdown\n"\
     " - Enter '2' to exit the Flower Shop App\n"
