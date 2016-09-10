@@ -1,7 +1,7 @@
 module Fillable
 
   def unfillable?(catalogue)
-    order_file = read_file
+    order_file = read_csv_file
     resp = false
     order_file.each do |line|
       line = line.first.split(' ')
