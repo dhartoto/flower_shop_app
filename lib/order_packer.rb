@@ -1,7 +1,9 @@
 require_relative 'pack'
+require_relative 'order'
+require_relative 'catalogue'
 
-class Packer
-  def self.pack(order, catalogue)
+class OrderPacker
+  def self.run(order, catalogue)
     new(order: order, catalogue: catalogue)
   end
 
@@ -15,10 +17,8 @@ class Packer
   end
 
   def create_packs
-    packs = []
-    order.items.each do |item|
+    order.items.inject([]) do |packs, item|
       packs << Pack.create(item, catalogue)
     end
-    packs
   end
 end

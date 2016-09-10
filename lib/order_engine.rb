@@ -1,4 +1,4 @@
-require_relative 'packer'
+require_relative 'order_packer'
 require_relative 'invoicer'
 
 class OrderEngine
@@ -11,7 +11,7 @@ class OrderEngine
   end
 
   def run
-    package = Packer.pack(order, catalogue)
+    package = OrderPacker.run(order, catalogue)
     invoice = Invoicer.create(package)
     self.response = invoice.details
   end
