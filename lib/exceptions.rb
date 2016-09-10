@@ -1,4 +1,4 @@
-module FlowerShop
+module Application
   class FileError < StandardError
   end
 

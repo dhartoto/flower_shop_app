@@ -20,7 +20,7 @@ describe UploadValidator do
       error_message = "Error: File not found. Please save order.csv to public/uploads folder."
 
       expect { UploadValidator.validate }.to raise_exception(
-        FlowerShop::FileError,
+        Application::FileError,
         error_message
       )
     end
@@ -34,7 +34,7 @@ describe UploadValidator do
       error_message = "Error: File empty. Please check content of order.csv."
 
       expect { UploadValidator.validate }.to raise_exception(
-        FlowerShop::FileError,
+        Application::FileError,
         error_message
       )
     end

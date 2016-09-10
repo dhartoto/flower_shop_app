@@ -44,7 +44,7 @@ private
   end
 
   def self.raise_data_error
-    raise FlowerShop::DataError,
+    raise Application::DataError,
       "Error: Invalid data. Please check the content of order.csv"
   end
 end

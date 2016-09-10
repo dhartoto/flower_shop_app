@@ -25,7 +25,7 @@ describe DataValidator do
 
       it 'raises DataError with error message' do
         expect { DataValidator.validate(catalogue) }
-          .to raise_exception(FlowerShop::DataError, error_message)
+          .to raise_exception(Application::DataError, error_message)
       end
     end
 
@@ -34,7 +34,7 @@ describe DataValidator do
 
       it 'raises DataError with error message' do
         expect { DataValidator.validate(catalogue) }
-          .to raise_exception(FlowerShop::DataError, error_message)
+          .to raise_exception(Application::DataError, error_message)
       end
     end
   end
