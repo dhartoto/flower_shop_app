@@ -1,28 +1,41 @@
 require 'spec_helper'
 require 'data_validator'
 require 'catalogue'
+require 'exceptions'
 
 describe DataValidator do
   let(:catalogue) { Catalogue.create }
 
   context 'when data is ok' do
-    it 'is valid' do
+
+    it 'returns true' do
       allow(CSV).to receive(:read) { [["10 R12"], ["15 L09"], ["13 T58"]] }
-      resp = DataValidator.validate(catalogue)
-      expect(resp.valid?).to eq(true)
+
+      expect(DataValidator.validate(catalogue)).to eq(true)
     end
   end
-  context 'when data in wrong format' do
-    let(:resp) { DataValidator.validate(catalogue) }
 
-    before { allow(CSV).to receive(:read) { [["ten R12"], ["15 L09"]] } }
-
-    it 'is invalid' do
-      expect(resp.valid?).to eq(false)
+  context 'when data errors exists' do
+    let(:error_message) do
+      "Error: Invalid data. Please check the content of order.csv"
     end
-    it 'assigns incorrect file type error message' do
-      msg = "Error: Invalid data. Please check the content of order.csv"
-      expect(resp.error_message).to eq(msg)
+
+    context 'when quantity is not an integer' do
+      before { allow(CSV).to receive(:read) { [["ten R12"], ["15 L09"]] } }
+
+      it 'raises DataError with error message' do
+        expect { DataValidator.validate(catalogue) }
+          .to raise_exception(FlowerShop::DataError, error_message)
+      end
+    end
+
+    context 'when product code is incorrect' do
+      before { allow(CSV).to receive(:read) { [["10 Z12"]] } }
+
+      it 'raises DataError with error message' do
+        expect { DataValidator.validate(catalogue) }
+          .to raise_exception(FlowerShop::DataError, error_message)
+      end
     end
   end
 end

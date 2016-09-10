@@ -2,26 +2,49 @@ require_relative 'base_validator'
 
 class DataValidator < BaseValidator
   def self.validate(catalogue)
-    errors = data_errors?(catalogue)
-    error_message = errors ? get_error_message : nil
-    status = errors ? 400 : 200
-    new(status: status, error_message: error_message)
+    validate_file_content(catalogue)
+
+    true
   end
 
-  private
+private
 
-  def self.get_error_message
-    "Error: Invalid data. Please check the content of order.csv"
-  end
+  def self.validate_file_content(catalogue)
+    file = read_csv_file
+    file.each do |row|
+      verify_product_code(row, catalogue)
 
-  def self.data_errors?(catalogue)
-    resp = false
-    file = read_file
-    file.each do |line|
-      line = line.first.split(' ')
-      Integer(line[0]) rescue resp = true # check if first part is an integer
-      resp = true unless catalogue.find(line[1]) # check if product code is valid
+      verify_quantity_format(row)
     end
-    resp
+  end
+
+  def self.verify_product_code(row, catalogue)
+    code = get_product_code(row)
+
+    raise_data_error unless catalogue.find(code)
+  end
+
+  def self.get_product_code(row)
+    arr = row.first.split(' ')
+
+    arr[1]
+  end
+
+  def self.verify_quantity_format(row)
+    quantity = get_quantity(row)
+
+    Integer(quantity)
+  rescue ArgumentError
+    raise_data_error
+  end
+
+  def self.get_quantity(row)
+    arr = row.first.split(' ')
+    arr[0]
+  end
+
+  def self.raise_data_error
+    raise FlowerShop::DataError,
+      "Error: Invalid data. Please check the content of order.csv"
   end
 end
