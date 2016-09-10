@@ -4,4 +4,7 @@ module Application
 
   class DataError < StandardError
   end
+
+  class OrderError < StandardError
+  end
 end

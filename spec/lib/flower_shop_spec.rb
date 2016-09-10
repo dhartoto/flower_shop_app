@@ -29,6 +29,7 @@ describe FlowerShop do
     before do
       allow(Catalogue).to receive(:create)
       allow(OrderEngine).to receive(:new) { order_engine }
+      allow(Validator).to receive(:validate)
       allow(order_engine).to receive(:run)
     end
 
@@ -45,6 +46,37 @@ describe FlowerShop do
         subject.run
 
         expect(subject.response).to eq(stubbed_response)
+      end
+
+      context 'when known errors are raised' do
+        let(:mock_error_message) { 'error_message' }
+
+        it 'displays file error message to user' do
+          allow(Validator).to receive(:validate)
+            .and_raise(Application::FileError, mock_error_message)
+
+          subject.run
+
+          expect(subject.response).to eq(mock_error_message)
+        end
+
+        it 'displays data error message to user' do
+          allow(Validator).to receive(:validate)
+            .and_raise(Application::DataError, mock_error_message)
+
+          subject.run
+
+          expect(subject.response).to eq(mock_error_message)
+        end
+
+        it 'displays order error message to user' do
+          allow(Validator).to receive(:validate)
+            .and_raise(Application::OrderError, mock_error_message)
+
+          subject.run
+
+          expect(subject.response).to eq(mock_error_message)
+        end
       end
     end
 

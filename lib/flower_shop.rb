@@ -1,5 +1,6 @@
 require_relative 'catalogue'
 require_relative 'order_engine'
+require_relative 'validator'
 
 class FlowerShop
   attr_reader   :catalogue
@@ -19,10 +20,11 @@ class FlowerShop
 
     exit_flower_shop_app if user_input == '2'
 
-    puts response # display response from order filler or exit message
+    puts response
   end
 
 private
+
   def get_user_input(input = nil)
     while not ['1', '2'].include?(input)
       puts response
@@ -32,9 +34,18 @@ private
   end
 
   def get_optimal_bundle_for_order
+    validate_file_upload
     order_engine = OrderEngine.new(catalogue)
     order_engine.run
-    self.response = order_engine.response # expect error message or results
+    self.response = order_engine.response
+  rescue Application::FileError, Application::DataError,
+    Application::OrderError => error
+
+    self.response = error.message
+  end
+
+  def validate_file_upload
+    Validator.validate(catalogue)
   end
 
   def exit_flower_shop_app
