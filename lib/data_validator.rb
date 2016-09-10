@@ -1,6 +1,6 @@
-require_relative 'standard_validator'
+require_relative 'base_validator'
 
-class DataValidator < StandardValidator
+class DataValidator < BaseValidator
   def self.validate(catalogue)
     errors = data_errors?(catalogue)
     error_message = errors ? get_error_message : nil

@@ -1,6 +1,6 @@
 require 'csv'
 
-class StandardValidator
+class BaseValidator
   FILE_NAME = 'order.csv'
   FULL_PATH = "public/uploads/#{FILE_NAME}"
 

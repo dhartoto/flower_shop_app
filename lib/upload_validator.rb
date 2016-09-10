@@ -1,6 +1,6 @@
-require_relative 'standard_validator'
+require_relative 'base_validator'
 
-class UploadValidator < StandardValidator
+class UploadValidator < BaseValidator
   def self.validate(*arg)
     errors = !File.exists?(FULL_PATH) || File.zero?(FULL_PATH)
     error_message = errors ? get_error_message : nil

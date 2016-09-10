@@ -1,7 +1,7 @@
-require_relative 'standard_validator'
+require_relative 'base_validator'
 require_relative 'fillable'
 
-class OrderValidator < StandardValidator
+class OrderValidator < BaseValidator
   class << self
     include Fillable
   end
