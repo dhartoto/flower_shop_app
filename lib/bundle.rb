@@ -13,82 +13,87 @@ class Bundle
     @code           = options[:code]
     @order_quantity = options[:order_quantity]
     @catalogue      = options[:catalogue]
+    @bundles_offered = catalogue.find(code)['bundles'].keys
     @breakdown      = find_min_bundle
   end
 
 private
+  attr_reader :bundles_offered
 
   def find_min_bundle
-    bundles_offered = catalogue.find(code)['bundles'].keys
+    order_bundle_array = select_min_bundle_array
 
-    order_bundles_array = select_min_bundle_array(bundles_offered, order_quantity)
-
-    convert_to_hash(bundles_offered, order_bundles_array)
+    convert_to_hash(order_bundle_array)
   end
 
-  def select_min_bundle_array(bundles, order)
-    combinations = collect_bundles_less_than_or_equal_to_order(bundles, order)
-    matches = find_matches(combinations, bundles, order)
+  def select_min_bundle_array
+    matches = find_matching_bundles
+
     matches.sort {|x,y| sum(x) <=> sum(y) }.first
   end
 
-  def collect_bundles_less_than_or_equal_to_order(bundles, order)
-    start_at = 0
-    end_at = bundles.size
-    bundle_combination = Array.new(bundles.size, 0)
-    tested_combinations = [bundle_combination]
+  def find_matching_bundles
+    starting_index = 0
+    ending_index = bundles_offered.size
+    bundle_counter = Array.new(bundles_offered.size, 0)
+    collected_combinations = [bundle_counter]
+    matching_bundles = []
 
-    tested_combinations.each do |batch|
-      bundle_combination = batch.dup
+    collected_combinations.each do |batch|
 
-        (start_at...end_at).each do |index|
-          while total_flowers_collected(bundle_combination, bundles) <= order do
-            tested_combinations << bundle_combination.dup
-            bundle_combination[index] += 1
-          end
+      (starting_index...ending_index).each do |index|
+        while less_than_order_quantity?(bundle_counter) do
+          dup_counter = bundle_counter.dup
+          dup_counter[index] += 1
+          collected_combinations << dup_counter unless collected_combinations.include?(dup_counter)
 
-          bundle_combination = batch.dup unless index == end_at && collection_is_greater_than_order(bundle_combination, bundles, order)
-          tested_combinations.uniq!
-          start_at += 1
+          matching_bundles << bundle_counter if bundle_match?(bundle_counter)
+          bundle_counter = dup_counter
         end
 
-      start_at = 1
+        bundle_counter = batch.dup unless index == ending_index
+
+        starting_index += 1
+      end
+
+      starting_index = 1
     end
-    tested_combinations.uniq
+
+    matching_bundles
   end
 
-  def total_flowers_collected(batches, bundles)
+  def bundle_match?(bundle_counter)
+    bundle_total(bundle_counter) == order_quantity
+  end
+
+  def less_than_order_quantity?(bundle_counter)
+    bundle_total(bundle_counter) <= order_quantity
+  end
+
+  def bundle_total(bundle_counter)
     total = 0
-    batches.each_with_index do |count, index|
-      total += bundles[index] * count
+    bundle_counter.each_with_index do |count, index|
+      total += bundles_offered[index] * count
     end
     total
   end
 
-  def find_matches(combinations, bundles, order)
-    match = []
-    combinations.each do |batch|
-      match << batch if total_flowers_collected(batch, bundles) == order
-    end
-    match
-  end
-
   def sum(array)
-    array.inject{ |r,e| r + e }
+    array.inject { |total, amount| total + amount }
   end
 
-  def convert_to_hash(catalogue_bundles, bundle_array)
+  def convert_to_hash(bundle_array)
     bundles = {}
-    catalogue_bundles.each_with_index do |bundle, index|
+    bundles_offered.each_with_index do |bundle, index|
       bundles[bundle] = bundle_array[index]
     end
-    delete_zero_bundles(bundles)
+
+    delete_zero_bundle(bundles)
   end
 
-  def delete_zero_bundles(bundles)
-    bundles.each do |k,v|
-      bundles.delete(k) if v == 0
-    end
+  def delete_zero_bundle(bundles)
+    bundles.reject! {|bundle, amount| amount == 0}
+
     bundles
   end
 end
