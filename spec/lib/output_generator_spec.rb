@@ -13,7 +13,7 @@ describe OutputGenerator do
       let(:order_bundles) do
         [Bundle.new(
           code: 'R12',
-          total_quantity: 15,
+          order_quantity: 15,
           breakdown: { 5 => 1, 10 => 1 },
           catalogue: catalogue
           )]
@@ -41,19 +41,19 @@ describe OutputGenerator do
       let(:order_bundles) do
         [Bundle.new(
           code: 'R12',
-          total_quantity: 10,
+          order_quantity: 10,
           bundles: { 10 => 1 },
           catalogue: catalogue
           ),
         Bundle.new(
           code: 'L09',
-          total_quantity: 15,
+          order_quantity: 15,
           bundles: { 9 => 1, 6 => 1 },
           catalogue: catalogue
           ),
         Bundle.new(
           code: 'T58',
-          total_quantity: 13,
+          order_quantity: 13,
           bundles: { 5 => 2, 3 => 1 },
           catalogue: catalogue
           )]

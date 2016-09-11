@@ -2,34 +2,37 @@ class Bundle
   def self.create(item, catalogue)
     new(
       code: item.code,
-      total_quantity: item.quantity,
+      order_quantity: item.quantity,
       catalogue: catalogue
       )
   end
 
-  attr_reader :code, :total_quantity, :catalogue, :breakdown
+  attr_reader :code, :order_quantity, :catalogue, :breakdown
 
   def initialize(options={})
     @code           = options[:code]
-    @total_quantity = options[:total_quantity]
+    @order_quantity = options[:order_quantity]
     @catalogue      = options[:catalogue]
     @breakdown      = find_min_bundle
   end
 
 private
+
   def find_min_bundle
-    catalogue_bundles = catalogue.find(code)['bundles'].keys
-    bundle_array = select_min_bundle_array(catalogue_bundles, total_quantity)
-    convert_to_hash(catalogue_bundles, bundle_array)
+    bundles_offered = catalogue.find(code)['bundles'].keys
+
+    order_bundles_array = select_min_bundle_array(bundles_offered, order_quantity)
+
+    convert_to_hash(bundles_offered, order_bundles_array)
   end
 
   def select_min_bundle_array(bundles, order)
-    combinations = find_bundles_less_than_or_equal_to_order(bundles, order)
+    combinations = collect_bundles_less_than_or_equal_to_order(bundles, order)
     matches = find_matches(combinations, bundles, order)
     matches.sort {|x,y| sum(x) <=> sum(y) }.first
   end
 
-  def find_bundles_less_than_or_equal_to_order(bundles, order)
+  def collect_bundles_less_than_or_equal_to_order(bundles, order)
     start_at = 0
     end_at = bundles.size
     bundle_combination = Array.new(bundles.size, 0)

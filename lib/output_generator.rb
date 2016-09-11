@@ -30,7 +30,7 @@ class OutputGenerator
       product_total += bundle_total
       product_breakdown += create_product_bundle_output(count, bundle, bundle_total)
     end
-    product_summary = "#{bundle.total_quantity} #{bundle.code} $#{product_total.round(2)}\n"
+    product_summary = "#{bundle.order_quantity} #{bundle.code} $#{product_total.round(2)}\n"
     product_summary + product_breakdown
   end
 
