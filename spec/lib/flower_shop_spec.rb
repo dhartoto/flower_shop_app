@@ -14,12 +14,6 @@ describe FlowerShop do
 
       expect(subject.response).to eq(msg)
     end
-
-    it 'should have catalogue' do
-      expect(Catalogue).to receive(:create)
-
-      FlowerShop.new
-    end
   end
 
   describe '#run' do

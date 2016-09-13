@@ -1,9 +1,7 @@
 require 'spec_helper'
 require 'validator'
-require 'catalogue'
 
 describe Validator do
-  let(:catalogue) { Catalogue.create }
 
   context 'when no error' do
     before do
@@ -12,7 +10,7 @@ describe Validator do
     end
 
     it 'returns true' do
-      expect(Validator.validate(catalogue)).to eq(true)
+      expect(Validator.validate).to eq(true)
     end
   end
 
@@ -22,7 +20,7 @@ describe Validator do
         .and_raise(Application::FileError)
       allow(DataValidator).to receive(:validate)
 
-      expect { Validator.validate(catalogue) }
+      expect { Validator.validate }
         .to raise_exception(Application::FileError)
     end
   end
@@ -33,7 +31,7 @@ describe Validator do
       allow(DataValidator).to receive(:validate)
         .and_raise(Application::DataError)
 
-      expect { Validator.validate(catalogue) }
+      expect { Validator.validate }
         .to raise_exception(Application::DataError)
     end
   end

@@ -1,17 +1,15 @@
 require 'spec_helper'
 require 'data_validator'
-require 'catalogue'
 require 'exceptions'
 
 describe DataValidator do
-  let(:catalogue) { Catalogue.create }
 
   context 'when data is ok' do
 
     it 'returns true' do
       allow(CSV).to receive(:read) { [["10 R12"], ["15 L09"], ["13 T58"]] }
 
-      expect(DataValidator.validate(catalogue)).to eq(true)
+      expect(DataValidator.validate).to eq(true)
     end
   end
 
@@ -24,7 +22,7 @@ describe DataValidator do
       before { allow(CSV).to receive(:read) { [["ten R12"], ["15 L09"]] } }
 
       it 'raises DataError with error message' do
-        expect { DataValidator.validate(catalogue) }
+        expect { DataValidator.validate }
           .to raise_exception(Application::DataError, error_message)
       end
     end
@@ -33,7 +31,7 @@ describe DataValidator do
       before { allow(CSV).to receive(:read) { [["10 Z12"]] } }
 
       it 'raises DataError with error message' do
-        expect { DataValidator.validate(catalogue) }
+        expect { DataValidator.validate }
           .to raise_exception(Application::DataError, error_message)
       end
     end

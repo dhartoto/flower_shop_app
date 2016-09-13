@@ -3,12 +3,10 @@ require_relative 'order_engine'
 require_relative 'validator'
 
 class FlowerShop
-  attr_reader   :catalogue
   attr_accessor :response
 
   def initialize
     @response  = user_instructions
-    @catalogue = Catalogue.create
   end
 
   def run
@@ -35,6 +33,7 @@ private
 
   def get_optimal_bundle_for_order
     validate_uploaded_file
+    catalogue = Catalogue.create
     order = Order.create
     order_engine = OrderEngine.new(order, catalogue)
     order_engine.run
@@ -46,7 +45,7 @@ private
   end
 
   def validate_uploaded_file
-    Validator.validate(catalogue)
+    Validator.validate
   end
 
   def exit_flower_shop_app

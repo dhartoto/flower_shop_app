@@ -1,7 +1,9 @@
 require_relative 'base_validator'
+require_relative 'catalogue'
 
 class DataValidator < BaseValidator
-  def self.validate(catalogue)
+  def self.validate
+    catalogue = Catalogue.create
     validate_file_content(catalogue)
 
     true
@@ -11,6 +13,7 @@ private
 
   def self.validate_file_content(catalogue)
     file = read_csv_file
+    
     file.each do |row|
       verify_product_code(row, catalogue)
 
