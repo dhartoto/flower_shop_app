@@ -20,7 +20,7 @@ describe OrderEngine do
 
   describe '#run' do
     let(:order_engine) { OrderEngine.new('order', 'catalogue') }
-    let(:output_generator) { instance_double('OutputGenerator', details: 'total $$') }
+    let(:output_generator) { instance_double('OutputGenerator', packed_order_details: 'total $$') }
 
     before do
       allow(OrderPacker).to receive(:run)

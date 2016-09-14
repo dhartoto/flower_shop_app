@@ -31,7 +31,7 @@ describe OutputGenerator do
         output = OutputGenerator.run(order_packer)
         details = "15 R12 $19.98\n\t1 x 5 $6.99\n\t1 x 10 $12.99\n"
 
-        expect(output.details).to eq(details)
+        expect(output.packed_order_details).to eq(details)
       end
     end
 
@@ -67,7 +67,7 @@ describe OutputGenerator do
           "15 L09 $41.9\n\t1 x 6 $16.95\n\t1 x 9 $24.95\n"\
           "13 T58 $25.85\n\t1 x 3 $5.95\n\t2 x 5 $19.9\n"
 
-        expect(output.details).to eq(details)
+        expect(output.packed_order_details).to eq(details)
       end
     end
   end

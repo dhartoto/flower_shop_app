@@ -38,10 +38,9 @@ private
     order_engine = OrderEngine.new(order, catalogue)
     order_engine.run
     self.response = order_engine.response
-  rescue Application::FileError, Application::DataError,
-    Application::OrderError => error
+  rescue Application::FileError, Application::DataError, Application::OrderError => e
 
-    self.response = error.message
+    self.response = e.message
   end
 
   def validate_uploaded_file

@@ -1,5 +1,5 @@
 class OutputGenerator
-  attr_reader   :order_packer, :details
+  attr_reader   :order_packer, :packed_order_details
   attr_accessor :total_value
 
   def self.run(order_packer)
@@ -8,7 +8,7 @@ class OutputGenerator
 
   def initialize(options={})
     @order_packer = options[:order_packer]
-    @details = create_output_for_packed_order
+    @packed_order_details = create_output_for_packed_order
   end
 
   def create_output_for_packed_order

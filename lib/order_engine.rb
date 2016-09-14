@@ -14,7 +14,7 @@ class OrderEngine
     order_packer = get_minimum_order_bundles
     output = generate_output(order_packer)
 
-    self.response = output.details
+    self.response = output.packed_order_details
   end
 
 private
