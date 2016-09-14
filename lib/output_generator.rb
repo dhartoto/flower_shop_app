@@ -8,33 +8,32 @@ class OutputGenerator
 
   def initialize(options={})
     @order_packer = options[:order_packer]
-    @details = create_details
+    @details = create_output_for_packed_order
   end
 
-  def create_details
+  def create_output_for_packed_order
     order_bundles = order_packer.order_bundles
-    total_output = ""
+    packed_order_output = ""
     order_bundles.each do |bundle|
-      available_bundles = bundle.catalogue.find(bundle.code)['bundles']
-      bundle_breakdown = bundle.breakdown
-      total_output += create_details_output(bundle, available_bundles, bundle_breakdown)
+      packed_order_output += create_output_for_ordered_bundle(bundle)
     end
-    total_output
+    packed_order_output
   end
 
-  def create_details_output(bundle, available_bundles, bundle_breakdown)
-    product_total = 0
+  def create_output_for_ordered_bundle(bundle)
+    prices = bundle.prices
+    total_product_price = 0
     product_breakdown = ""
-    bundle_breakdown.each do |bundle, count|
-      bundle_total = (available_bundles[bundle] * count)
-      product_total += bundle_total
-      product_breakdown += create_product_bundle_output(count, bundle, bundle_total)
+    bundle.breakdown.each do |bundle_offered, quantity|
+      total_bundle_price = prices[bundle_offered] * quantity
+      total_product_price += total_bundle_price
+      product_breakdown += product_breakdown_to_string(quantity, bundle_offered, total_bundle_price)
     end
-    product_summary = "#{bundle.order_quantity} #{bundle.code} $#{product_total.round(2)}\n"
+    product_summary = "#{bundle.order_quantity} #{bundle.code} $#{total_product_price.round(2)}\n"
     product_summary + product_breakdown
   end
 
-  def create_product_bundle_output(count, bundle, value)
-    "\t#{ count } x #{ bundle } $#{ value }\n"
+  def product_breakdown_to_string(quantity, bundle_offered, value)
+    "\t#{ quantity } x #{ bundle_offered } $#{ value }\n"
   end
 end
