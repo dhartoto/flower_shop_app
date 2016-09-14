@@ -7,18 +7,19 @@ class Bundle
       )
   end
 
-  attr_reader :code, :order_quantity, :catalogue, :breakdown
+  attr_reader :code, :order_quantity, :breakdown, :prices
 
   def initialize(options={})
-    @code           = options[:code]
-    @order_quantity = options[:order_quantity]
-    @catalogue      = options[:catalogue]
-    @bundles_offered = catalogue.find(code)['bundles'].keys
-    @breakdown      = find_min_bundle
+    @code            = options[:code]
+    @order_quantity  = options[:order_quantity]
+    @catalogue       = options[:catalogue]
+    @prices          = catalogue.find(code)['bundles']
+    @bundles_offered = prices.keys
+    @breakdown       = find_min_bundle
   end
 
 private
-  attr_reader :bundles_offered
+  attr_reader :bundles_offered, :catalogue
 
   def find_min_bundle
     order_bundle_array = select_min_bundle_array
@@ -29,7 +30,7 @@ private
   def select_min_bundle_array
     matches = find_matching_bundles
 
-    matches.sort {|x,y| sum(x) <=> sum(y) }.first
+    matches.sort { |x,y| sum(x) <=> sum(y) }.first
   end
 
   def find_matching_bundles

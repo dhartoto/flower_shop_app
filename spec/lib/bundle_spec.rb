@@ -20,12 +20,6 @@ describe Bundle do
       expect(bundle.order_quantity).to eq(item.quantity)
     end
 
-    it 'creates a bundle with catalogue' do
-      bundle = Bundle.create(item, catalogue)
-
-      expect(bundle.catalogue).to eq(catalogue)
-    end
-
     context 'when one order is for Tulip (T58)' do
       it 'returns 1 x 3 for order quantity 3' do
         item = Item.new(code: 'T58', quantity: 3)
