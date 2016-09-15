@@ -1,11 +1,13 @@
 require_relative 'order_packer'
 require_relative 'output_generator'
+require_relative 'order'
+require_relative 'catalogue'
 
 class OrderEngine
   attr_reader   :order, :catalogue
   attr_accessor :response
 
-  def initialize(order, catalogue)
+  def initialize(order=Order.create, catalogue=Catalogue.create)
     @order = order
     @catalogue = catalogue
   end

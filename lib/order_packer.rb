@@ -1,6 +1,4 @@
 require_relative 'bundle'
-require_relative 'order'
-require_relative 'catalogue'
 
 class OrderPacker
   def self.run(order, catalogue)
