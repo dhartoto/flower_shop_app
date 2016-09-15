@@ -14,7 +14,10 @@ class FlowerShop
 
     user_input = get_user_input
 
-    get_optimal_bundle_for_order if user_input == '1'
+    if user_input == '1'
+      validate_uploaded_file
+      get_optimal_bundle_for_order
+    end
 
     exit_flower_shop_app if user_input == '2'
 
@@ -32,7 +35,6 @@ private
   end
 
   def get_optimal_bundle_for_order
-    validate_uploaded_file
     order_engine = OrderEngine.new
     order_engine.run
     self.response = order_engine.response
