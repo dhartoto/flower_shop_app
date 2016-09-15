@@ -1,5 +1,6 @@
-require_relative 'order_engine'
-require_relative 'validator'
+
+require 'order_engine'
+require 'validator'
 
 class FlowerShop
   attr_accessor :response

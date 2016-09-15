@@ -1,3 +1,8 @@
+models = File.expand_path("../../models", __FILE__)
+spec_models = File.expand_path("../models", __FILE__)
+spec_lib = File.expand_path("../lib", __FILE__)
+$:.unshift(models, spec_models, spec_lib)
+
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
