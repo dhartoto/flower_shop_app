@@ -26,7 +26,7 @@ private
   def get_user_input(input = nil)
     while not ['1', '2'].include?(input)
       puts response
-      input = gets.chomp
+      input = STDIN.gets.chomp
     end
     input
   end
@@ -52,8 +52,10 @@ private
   end
 
   def user_instructions
-    " - Please save Order CSV file into the 'uploads' folder.\n"\
-    " - Enter '1' to calculate costs and bundle breakdown\n"\
-    " - Enter '2' to exit the Flower Shop App\n"
+    <<~eos
+     - Please save Order CSV file into the 'uploads' folder.
+     - Enter '1' to calculate costs and bundle breakdown
+     - Enter '2' to exit the Flower Shop App
+    eos
   end
 end

@@ -8,9 +8,11 @@ describe FlowerShop do
     it { should be_an_instance_of(FlowerShop) }
 
     it 'should have instructions to display' do
-      msg = " - Please save Order CSV file into the 'uploads' folder.\n"\
-          " - Enter '1' to calculate costs and bundle breakdown\n"\
-          " - Enter '2' to exit the Flower Shop App\n"
+      msg = <<-eos
+- Please save Order CSV file into the 'uploads' folder.
+- Enter '1' to calculate costs and bundle breakdown
+- Enter '2' to exit the Flower Shop App
+eos
 
       expect(subject.response).to eq(msg)
     end
@@ -28,7 +30,7 @@ describe FlowerShop do
     end
 
     context 'when user enters 1 to calculate costs and bundle' do
-      before { allow(subject).to receive(:gets) { '1' } }
+      before { allow(STDIN).to receive(:gets) { '1' } }
 
       it 'runs the order engine' do
         expect(order_engine).to receive(:run)
@@ -75,7 +77,7 @@ describe FlowerShop do
     end
 
     context 'when user enters 2 to exit program' do
-      before { allow(subject).to receive(:gets) { '2' } }
+      before { allow(STDIN).to receive(:gets) { '2' } }
 
       it 'does not fill order' do
         expect(OrderEngine).not_to receive(:new)
@@ -94,9 +96,9 @@ describe FlowerShop do
 
     context 'when user enters invalid entry' do
       it 'gets user input again' do
-        allow(subject).to receive(:gets).and_return('wrong_input', '2')
+        allow(STDIN).to receive(:gets).and_return('wrong_input', '2')
 
-        expect(subject).to receive(:gets).twice
+        expect(STDIN).to receive(:gets).twice
 
         subject.run
       end
